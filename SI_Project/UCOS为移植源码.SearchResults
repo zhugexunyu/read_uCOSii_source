@@ -1,0 +1,344 @@
+---- OS_LOWEST_PRIO Matches (52 in 10 files) ----
+os_cfg.h (D:\单片机\ucOS II_SourceCodeAriginal\APP) line 38 : 
+
+#define OS_LOWEST_PRIO           31    /* Defines the lowest priority that can be assigned ...         */
+                                       /* ... MUST NEVER be higher than 254!                           */
+
+#define OS_MAX_EVENTS            10    /* Max. number of event control blocks in your application      */
+OS_EventTaskRdy in os_core.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT8U    prio;
+#if OS_LOWEST_PRIO > 63
+    INT16U  *ptbl;
+#endif
+
+
+#if OS_LOWEST_PRIO <= 63
+    y    = OSUnMapTbl[pevent->OSEventGrp];              /* Find HPT waiting for message                */
+    x    = OSUnMapTbl[pevent->OSEventTbl[y]];
+    prio = (INT8U)((y << 3) + x);                       /* Find priority of task getting the msg       */
+OS_EventTaskRemoveMulti in os_core.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT8U      y;
+#if (OS_LOWEST_PRIO <= 63)
+    INT8U      bity;
+    INT8U      bitx;
+#else
+OS_EventWaitListInit in os_core.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+{
+#if OS_LOWEST_PRIO <= 63
+    INT8U  *ptbl;
+#else
+    INT16U *ptbl;
+OS_InitRdyList in os_core.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT8U    i;
+#if OS_LOWEST_PRIO <= 63
+    INT8U   *prdytbl;
+#else
+    INT16U  *prdytbl;
+OS_SchedNew in os_core.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+{
+#if OS_LOWEST_PRIO <= 63                         /* See if we support up to 64 tasks                   */
+    INT8U   y;
+
+
+OS_TCBInit in os_core.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+
+#if OS_LOWEST_PRIO <= 63
+        ptcb->OSTCBY             = (INT8U)(prio >> 3);          /* Pre-compute X, Y, BitX and BitY     */
+        ptcb->OSTCBX             = (INT8U)(prio & 0x07);
+        ptcb->OSTCBBitY          = (INT8U)(1 << ptcb->OSTCBY);
+os_dbg.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Ports) line 65 : 
+
+OS_COMPILER_OPT  INT16U  const  OSLowestPrio       = OS_LOWEST_PRIO;
+
+OS_COMPILER_OPT  INT16U  const  OSMboxEn           = OS_MBOX_EN;
+
+os_dbg.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Ports) line 109 : 
+
+OS_COMPILER_OPT  INT16U  const  OSTCBPrioTblMax    = OS_LOWEST_PRIO + 1;         /* Number of entries in OSTCBPrioTbl[] */
+OS_COMPILER_OPT  INT16U  const  OSTCBSize          = sizeof(OS_TCB);             /* Size in Bytes of OS_TCB             */
+OS_COMPILER_OPT  INT16U  const  OSTicksPerSec      = OS_TICKS_PER_SEC;
+OS_COMPILER_OPT  INT16U  const  OSTimeTickHookEn   = OS_TIME_TICK_HOOK_EN;
+OSMboxQuery in os_mbox.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT8U      i;
+#if OS_LOWEST_PRIO <= 63
+    INT8U     *psrc;
+    INT8U     *pdest;
+#else
+os_mutex.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 152 : 
+*                               OS_ERR_PRIO_INVALID if the priority you specify is higher that the
+*                                                   maximum allowed (i.e. > OS_LOWEST_PRIO)
+*
+* Returns    : != (void *)0  is a pointer to the event control clock (OS_EVENT) associated with the
+*                            created mutex.
+OSMutexCreate in os_mutex.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    }
+    if (prio >= OS_LOWEST_PRIO) {                          /* Validate PIP                             */
+        *perr = OS_ERR_PRIO_INVALID;
+        return ((OS_EVENT *)0);
+    }
+OSMutexPend in os_mutex.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+            ptcb->OSTCBPrio = pip;                         /* Change owner task prio to PIP            */
+#if OS_LOWEST_PRIO <= 63
+            ptcb->OSTCBY    = (INT8U)( ptcb->OSTCBPrio >> 3);
+            ptcb->OSTCBX    = (INT8U)( ptcb->OSTCBPrio & 0x07);
+            ptcb->OSTCBBitY = (INT8U)(1 << ptcb->OSTCBY);
+OSMutexQuery in os_mutex.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT8U      i;
+#if OS_LOWEST_PRIO <= 63
+    INT8U     *psrc;
+    INT8U     *pdest;
+#else
+OSMutex_RdyAtPrio in os_mutex.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    ptcb->OSTCBPrio         = prio;
+#if OS_LOWEST_PRIO <= 63
+    ptcb->OSTCBY            = (INT8U)((prio >> (INT8U)3) & (INT8U)0x07);
+    ptcb->OSTCBX            = (INT8U) (prio & (INT8U)0x07);
+    ptcb->OSTCBBitY         = (INT8U)(1 << ptcb->OSTCBY);
+OSQQuery in os_q.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT8U      i;
+#if OS_LOWEST_PRIO <= 63
+    INT8U     *psrc;
+    INT8U     *pdest;
+#else
+OSSemQuery in os_sem.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+{
+#if OS_LOWEST_PRIO <= 63
+    INT8U     *psrc;
+    INT8U     *pdest;
+#else
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 46 : 
+*              OS_ERR_PRIO_INVALID    if the priority you specify is higher that the maximum allowed
+*                                     (i.e. >= OS_LOWEST_PRIO)
+				你设置的优先级比允许的最高合法优先级OS_LOWEST_PRIO还高
+*              OS_ERR_PRIO_EXIST      if the new priority already exist.
+				你设置的优先级已经存在了(ucos2不允许2个任务的优先级相同)
+OSTaskChangePrio in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT8U      y_old;
+#if OS_LOWEST_PRIO <= 63
+    INT8U      bity_new;
+    INT8U      bitx_new;
+    INT8U      bity_old;
+OSTaskChangePrio in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+#if OS_ARG_CHK_EN > 0
+    if (oldprio >= OS_LOWEST_PRIO) {
+        if (oldprio != OS_PRIO_SELF) {
+            return (OS_ERR_PRIO_INVALID);
+        }
+    }
+    if (newprio >= OS_LOWEST_PRIO) {
+        return (OS_ERR_PRIO_INVALID);
+    }
+#endif
+OSTaskChangePrio in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    }
+#if OS_LOWEST_PRIO <= 63
+    y_new                 = (INT8U)(newprio >> 3);          /* Yes, compute new TCB fields             */
+    x_new                 = (INT8U)(newprio & 0x07);
+    bity_new              = (INT8U)(1 << y_new);
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 234 : 
+*              OS_ERR_PRIO_INVALID     if the priority you specify is higher that the maximum allowed
+*                                      (i.e. >= OS_LOWEST_PRIO)
+*              OS_ERR_TASK_CREATE_ISR  if you tried to create a task from an ISR.
+*********************************************************************************************************
+*/
+OSTaskCreate in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+#if OS_ARG_CHK_EN > 0
+    if (prio > OS_LOWEST_PRIO) {             /* Make sure priority is within allowable range           */
+        return (OS_ERR_PRIO_INVALID);
+    }
+#endif
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 347 : 
+*              OS_ERR_PRIO_INVALID     if the priority you specify is higher that the maximum allowed
+*                                      (i.e. > OS_LOWEST_PRIO)
+*              OS_ERR_TASK_CREATE_ISR  if you tried to create a task from an ISR.
+*********************************************************************************************************
+*/
+OSTaskCreateExt in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+#if OS_ARG_CHK_EN > 0
+    if (prio > OS_LOWEST_PRIO) {             /* Make sure priority is within allowable range           */
+        return (OS_ERR_PRIO_INVALID);
+    }
+#endif
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 428 : 
+*              OS_ERR_PRIO_INVALID     if the priority you specify is higher that the maximum allowed
+*                                      (i.e. >= OS_LOWEST_PRIO) or, you have not specified OS_PRIO_SELF.
+*              OS_ERR_TASK_DEL         if the task is assigned to a Mutex PIP.   
+*              OS_ERR_TASK_NOT_EXIST   if the task you want to delete does not exist.
+*              OS_ERR_TASK_DEL_ISR     if you tried to delete a task from an ISR
+OSTaskDel in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+#if OS_ARG_CHK_EN > 0
+    if (prio >= OS_LOWEST_PRIO) {                       /* Task priority valid ?                       */
+        if (prio != OS_PRIO_SELF) {
+            return (OS_ERR_PRIO_INVALID);
+        }
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 608 : 
+*              OS_ERR_PRIO_INVALID    if the priority you specify is higher that the maximum allowed
+*                                     (i.e. >= OS_LOWEST_PRIO) or, you have not specified OS_PRIO_SELF.
+*              OS_ERR_TASK_DEL_REQ    if a task (possibly another task) requested that the running task be
+*                                     deleted.
+*********************************************************************************************************
+OSTaskDelReq in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+#if OS_ARG_CHK_EN > 0
+    if (prio >= OS_LOWEST_PRIO) {                               /* Task priority valid ?               */
+        if (prio != OS_PRIO_SELF) {
+            return (OS_ERR_PRIO_INVALID);
+        }
+OSTaskNameGet in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    }
+    if (prio > OS_LOWEST_PRIO) {                         /* Task priority valid ?                      */
+        if (prio != OS_PRIO_SELF) {
+            *perr = OS_ERR_PRIO_INVALID;                 /* No                                         */
+            return (0);
+OSTaskNameSet in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    }
+    if (prio > OS_LOWEST_PRIO) {                     /* Task priority valid ?                          */
+        if (prio != OS_PRIO_SELF) {
+            *perr = OS_ERR_PRIO_INVALID;             /* No                                             */
+            return;
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 831 : 
+*              OS_ERR_PRIO_INVALID        if the priority you specify is higher that the maximum allowed
+*                                         (i.e. >= OS_LOWEST_PRIO)
+*              OS_ERR_TASK_RESUME_PRIO    if the task to resume does not exist
+*              OS_ERR_TASK_NOT_EXIST      if the task is assigned to a Mutex PIP
+*              OS_ERR_TASK_NOT_SUSPENDED  if the task to resume has not been suspended
+OSTaskResume in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+#if OS_ARG_CHK_EN > 0
+    if (prio >= OS_LOWEST_PRIO) {                             /* Make sure task priority is valid      */
+        return (OS_ERR_PRIO_INVALID);
+    }
+#endif
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 899 : 
+*              OS_ERR_PRIO_INVALID    if the priority you specify is higher that the maximum allowed
+*                                     (i.e. > OS_LOWEST_PRIO) or, you have not specified OS_PRIO_SELF.
+*              OS_ERR_TASK_NOT_EXIST  if the desired task has not been created or is assigned to a Mutex PIP
+*              OS_ERR_TASK_OPT        if you did NOT specified OS_TASK_OPT_STK_CHK when the task was created
+*              OS_ERR_PDATA_NULL      if 'p_stk_data' is a NULL pointer
+OSTaskStkChk in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+#if OS_ARG_CHK_EN > 0
+    if (prio > OS_LOWEST_PRIO) {                       /* Make sure task priority is valid             */
+        if (prio != OS_PRIO_SELF) {
+            return (OS_ERR_PRIO_INVALID);
+        }
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 979 : 
+*              OS_ERR_PRIO_INVALID       if the priority you specify is higher that the maximum allowed
+*                                        (i.e. >= OS_LOWEST_PRIO) or, you have not specified OS_PRIO_SELF.
+*              OS_ERR_TASK_SUSPEND_PRIO  if the task to suspend does not exist
+*              OS_ERR_TASK_NOT_EXITS     if the task is assigned to a Mutex PIP
+*
+OSTaskSuspend in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    }
+    if (prio >= OS_LOWEST_PRIO) {                               /* Task priority valid ?               */
+        if (prio != OS_PRIO_SELF) {
+            return (OS_ERR_PRIO_INVALID);
+        }
+os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 1058 : 
+*              OS_ERR_PRIO_INVALID    if the priority you specify is higher that the maximum allowed
+*                                     (i.e. > OS_LOWEST_PRIO) or, you have not specified OS_PRIO_SELF.
+*              OS_ERR_PRIO            if the desired task has not been created
+*              OS_ERR_TASK_NOT_EXIST  if the task is assigned to a Mutex PIP
+*              OS_ERR_PDATA_NULL      if 'p_task_data' is a NULL pointer
+OSTaskQuery in os_task.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+#if OS_ARG_CHK_EN > 0
+    if (prio > OS_LOWEST_PRIO) {                 /* Task priority valid ?                              */
+        if (prio != OS_PRIO_SELF) {
+            return (OS_ERR_PRIO_INVALID);
+        }
+os_time.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 160 : 
+*              OS_ERR_PRIO_INVALID       if the priority you specify is higher that the maximum allowed
+*                                        (i.e. >= OS_LOWEST_PRIO)
+*              OS_ERR_TIME_NOT_DLY       Task is not waiting for time to expire
+*              OS_ERR_TASK_NOT_EXIST     The desired task has not been created or has been assigned to a Mutex.
+*********************************************************************************************************
+OSTimeDlyResume in os_time.c (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+
+    if (prio >= OS_LOWEST_PRIO) {
+        return (OS_ERR_PRIO_INVALID);
+    }
+    OS_ENTER_CRITICAL();
+ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 80 : 
+
+#define  OS_TASK_STAT_PRIO  (OS_LOWEST_PRIO - 1)        /* Statistic task priority                     */
+#define  OS_TASK_IDLE_PRIO  (OS_LOWEST_PRIO)            /* IDLE      task priority                     */
+
+#if OS_LOWEST_PRIO <= 63
+#define  OS_EVENT_TBL_SIZE ((OS_LOWEST_PRIO) / 8 + 1)   /* Size of event table                         */
+#define  OS_RDY_TBL_SIZE   ((OS_LOWEST_PRIO) / 8 + 1)   /* Size of ready table                         */
+#else
+#define  OS_EVENT_TBL_SIZE ((OS_LOWEST_PRIO) / 16 + 1)  /* Size of event table                         */
+#define  OS_RDY_TBL_SIZE   ((OS_LOWEST_PRIO) / 16 + 1)  /* Size of ready table                         */
+#endif
+
+#define  OS_TASK_IDLE_ID          65535u                /* ID numbers for Idle, Stat and Timer tasks   */
+os_event in ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT16U   OSEventCnt;                     /* Semaphore Count (not used if other EVENT type)          */
+#if OS_LOWEST_PRIO <= 63
+    INT8U    OSEventGrp;                     /* Group corresponding to tasks waiting for event to occur */
+    INT8U    OSEventTbl[OS_EVENT_TBL_SIZE];  /* List of tasks waiting for event to occur                */
+#else
+os_mbox_data in ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    void   *OSMsg;                         /* Pointer to message in mailbox                            */
+#if OS_LOWEST_PRIO <= 63
+    INT8U   OSEventTbl[OS_EVENT_TBL_SIZE]; /* List of tasks waiting for event to occur                 */
+    INT8U   OSEventGrp;                    /* Group corresponding to tasks waiting for event to occur  */
+#else
+ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 515 : 
+typedef struct os_mutex_data {
+#if OS_LOWEST_PRIO <= 63
+    INT8U   OSEventTbl[OS_EVENT_TBL_SIZE];  /* List of tasks waiting for event to occur                */
+    INT8U   OSEventGrp;                     /* Group corresponding to tasks waiting for event to occur */
+#else
+os_q_data in ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT16U         OSQSize;             /* Size of message queue                                       */
+#if OS_LOWEST_PRIO <= 63
+    INT8U          OSEventTbl[OS_EVENT_TBL_SIZE];  /* List of tasks waiting for event to occur         */
+    INT8U          OSEventGrp;          /* Group corresponding to tasks waiting for event to occur     */
+#else
+os_sem_data in ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT16U  OSCnt;                          /* Semaphore count                                         */
+#if OS_LOWEST_PRIO <= 63
+    INT8U   OSEventTbl[OS_EVENT_TBL_SIZE];  /* List of tasks waiting for event to occur                */
+    INT8U   OSEventGrp;                     /* Group corresponding to tasks waiting for event to occur */
+#else
+os_tcb in ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) : 
+    INT8U            OSTCBY; //（group）由优先级计算出的就绪表下标                /* Index into ready table corresponding to task priority   */
+#if OS_LOWEST_PRIO <= 63
+    INT8U            OSTCBBitX; // 就绪表操作掩码，&    /* Bit mask to access bit position in ready table          */
+    INT8U            OSTCBBitY; // 就绪组    /* Bit mask to access bit position in ready group          */
+#else
+ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 738 : 
+
+#if OS_LOWEST_PRIO <= 63
+OS_EXT  INT8U             OSRdyGrp;			 // 如果某一个组8个都未就绪(0)，则这个组对应的bit也为0                       /* Ready list group                         */
+OS_EXT  INT8U             OSRdyTbl[OS_RDY_TBL_SIZE];       /* 就绪表 Table of tasks which are ready to run    */
+#else
+ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 759 : 
+OS_EXT  OS_TCB           *OSTCBList;   // 指向OS_TCB内部的双向链表的链表头  /* Pointer to doubly linked list of TCBs    */
+OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];// 用prio做下标查表得到相应prio的任务的TCB指针/* Table of pointers to created TCBs        */
+OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS]; //系统中事先定义好所有任务的TCB数组                  /* Table of TCBs                  */
+
+#if OS_TICK_STEP_EN > 0
+ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 1651 : 
+
+    #if     OS_MAX_TASKS >  ((OS_LOWEST_PRIO - OS_N_SYS_TASKS) + 1)
+    #error  "OS_CFG.H,         OS_MAX_TASKS must be <= OS_LOWEST_PRIO - OS_N_SYS_TASKS + 1"
+    #endif
+
+#endif
+
+#if     OS_LOWEST_PRIO >  254
+#error  "OS_CFG.H,         OS_LOWEST_PRIO must be <= 254 in V2.8x and higher"
+#endif
+
+#ifndef OS_TASK_IDLE_STK_SIZE
+ucos_ii.h (D:\单片机\ucOS II_SourceCodeAriginal\uCOS-II\Source) line 1805 : 
+
+#ifndef OS_LOWEST_PRIO
+#error  "OS_CFG.H, Missing OS_LOWEST_PRIO: Defines the lowest priority that can be assigned"
+#endif
+
+
+---- OS_LOWEST_PRIO Search Errors Encountered (3) ----
+The following 3 files could not be processed:
+D:\单片机\ucOS II_SourceCodeAriginal\APP\config.h : File could not be opened.
+D:\单片机\ucOS II_SourceCodeAriginal\APP\RAM.ini : File could not be opened.
+D:\单片机\ucOS II_SourceCodeAriginal\APP\STM32_Reg.h : File could not be opened.
